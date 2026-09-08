@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ============================================== -->
+    <!-- KODA MATE - Dark Theme Styles                  -->
+    <!-- ============================================== -->
+
+    <!-- Activity Indicator -->
+    <Style TargetType="ActivityIndicator">
+        <Setter Property="Color" Value="{StaticResource AccentCyan}" />
+    </Style>
+
+    <!-- Indicator View -->
+    <Style TargetType="IndicatorView">
+        <Setter Property="IndicatorColor" Value="{StaticResource Gray600}"/>
+        <Setter Property="SelectedIndicatorColor" Value="{StaticResource AccentCyan}"/>
+    </Style>
+
+    <!-- Border -->
+    <Style TargetType="Border">
+        <Setter Property="Stroke" Value="{StaticResource Gray700}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 15"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource CardBackground}"/>
+    </Style>
+
+    <!-- BoxView -->
+    <Style TargetType="BoxView">
+        <Setter Property="BackgroundColor" Value="{StaticResource Gray700}" />
+    </Style>
+
+    <!-- Button - Gradient Style -->
+    <Style TargetType="Button">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource AccentBlue}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="BorderWidth" Value="0"/>
+        <Setter Property="CornerRadius" Value="15"/>
+        <Setter Property="Padding" Value="16,12"/>
+        <Setter Property="MinimumHeightRequest" Value="48"/>
+        <Setter Property="MinimumWidthRequest" Value="48"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{StaticResource TextDisabled}" />
+                            <Setter Property="BackgroundColor" Value="{StaticResource Gray700}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="PointerOver">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.9" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.8" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Secondary Button Style -->
+    <Style x:Key="SecondaryButton" TargetType="Button">
+        <Setter Property="TextColor" Value="{StaticResource AccentCyan}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderColor" Value="{StaticResource AccentCyan}" />
+        <Setter Property="BorderWidth" Value="2"/>
+        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="CornerRadius" Value="15"/>
+        <Setter Property="Padding" Value="16,12"/>
+    </Style>
+
+    <!-- Ghost Button Style -->
+    <Style x:Key="GhostButton" TargetType="Button">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="CornerRadius" Value="15"/>
+    </Style>
+
+    <!-- CheckBox -->
+    <Style TargetType="CheckBox">
+        <Setter Property="Color" Value="{StaticResource AccentCyan}" />
+        <Setter Property="MinimumHeightRequest" Value="44"/>
+        <Setter Property="MinimumWidthRequest" Value="44"/>
+    </Style>
+
+    <!-- DatePicker -->
+    <Style TargetType="DatePicker">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <!-- Editor -->
+    <Style TargetType="Editor">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceBackground}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource TextTertiary}" />
+    </Style>
+
+    <!-- Entry -->
+    <Style TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceBackground}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource TextTertiary}" />
+        <Setter Property="MinimumHeightRequest" Value="48"/>
+    </Style>
+
+    <!-- Frame (Legacy - prefer Border) -->
+    <Style TargetType="Frame">
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="BorderColor" Value="{StaticResource Gray700}" />
+        <Setter Property="CornerRadius" Value="15" />
+        <Setter Property="BackgroundColor" Value="{StaticResource CardBackground}" />
+        <Setter Property="Padding" Value="16"/>
+    </Style>
+
+    <!-- ImageButton -->
+    <Style TargetType="ImageButton">
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="BorderColor" Value="Transparent"/>
+        <Setter Property="BorderWidth" Value="0"/>
+        <Setter Property="CornerRadius" Value="15"/>
+        <Setter Property="MinimumHeightRequest" Value="48"/>
+        <Setter Property="MinimumWidthRequest" Value="48"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.5" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.7" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Label -->
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <!-- Span -->
+    <Style TargetType="Span">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Typography Styles                              -->
+    <!-- ============================================== -->
+
+    <Style x:Key="LargeTitle" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="34" />
+    </Style>
+
+    <Style x:Key="Title1" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="28" />
+    </Style>
+
+    <Style x:Key="Title2" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="22" />
+    </Style>
+
+    <Style x:Key="Title3" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="20" />
+    </Style>
+
+    <Style x:Key="Headline" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="17" />
+    </Style>
+
+    <Style x:Key="Body" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="15" />
+    </Style>
+
+    <Style x:Key="Callout" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="Subheadline" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+
+    <Style x:Key="Caption1" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextTertiary}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+
+    <Style x:Key="Caption2" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextTertiary}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="11" />
+    </Style>
+
+    <!-- Accent Text Styles -->
+    <Style x:Key="AccentText" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource AccentCyan}" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="GradientTitle" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource AccentCyan}" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="FontSize" Value="24" />
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Card Styles                                    -->
+    <!-- ============================================== -->
+
+    <Style x:Key="CardBorder" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource CardBackground}"/>
+        <Setter Property="Stroke" Value="{StaticResource Gray700}"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 15"/>
+        <Setter Property="Padding" Value="16"/>
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="{StaticResource BlackBrush}" 
+                        Offset="0,4" 
+                        Radius="8" 
+                        Opacity="0.3"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ElevatedCard" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceBackground}"/>
+        <Setter Property="Stroke" Value="Transparent"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 20"/>
+        <Setter Property="Padding" Value="20"/>
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="{StaticResource BlackBrush}" 
+                        Offset="0,8" 
+                        Radius="16" 
+                        Opacity="0.4"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- List Styles                                    -->
+    <!-- ============================================== -->
+
+    <Style TargetType="ListView">
+        <Setter Property="SeparatorColor" Value="{StaticResource Gray700}" />
+        <Setter Property="RefreshControlColor" Value="{StaticResource AccentCyan}" />
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+
+    <Style TargetType="CollectionView">
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Picker                                         -->
+    <!-- ============================================== -->
+
+    <Style TargetType="Picker">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="TitleColor" Value="{StaticResource TextSecondary}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceBackground}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Progress Indicators                            -->
+    <!-- ============================================== -->
+
+    <Style TargetType="ProgressBar">
+        <Setter Property="ProgressColor" Value="{StaticResource AccentCyan}" />
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Radio Button                                   -->
+    <!-- ============================================== -->
+
+    <Style TargetType="RadioButton">
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Refresh View                                   -->
+    <!-- ============================================== -->
+
+    <Style TargetType="RefreshView">
+        <Setter Property="RefreshColor" Value="{StaticResource AccentCyan}" />
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Search Bar                                     -->
+    <!-- ============================================== -->
+
+    <Style TargetType="SearchBar">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource TextTertiary}" />
+        <Setter Property="CancelButtonColor" Value="{StaticResource AccentCyan}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceBackground}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Slider                                         -->
+    <!-- ============================================== -->
+
+    <Style TargetType="Slider">
+        <Setter Property="MinimumTrackColor" Value="{StaticResource AccentCyan}" />
+        <Setter Property="MaximumTrackColor" Value="{StaticResource Gray600}" />
+        <Setter Property="ThumbColor" Value="{StaticResource AccentCyan}" />
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Switch                                         -->
+    <!-- ============================================== -->
+
+    <Style TargetType="Switch">
+        <Setter Property="OnColor" Value="{StaticResource AccentCyan}" />
+        <Setter Property="ThumbColor" Value="{StaticResource White}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="OnColor" Value="{StaticResource Gray600}" />
+                            <Setter Property="ThumbColor" Value="{StaticResource Gray500}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="On">
+                        <VisualState.Setters>
+                            <Setter Property="OnColor" Value="{StaticResource AccentCyan}" />
+                            <Setter Property="ThumbColor" Value="{StaticResource White}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Off">
+                        <VisualState.Setters>
+                            <Setter Property="ThumbColor" Value="{StaticResource Gray400}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Time Picker                                    -->
+    <!-- ============================================== -->
+
+    <Style TargetType="TimePicker">
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="FontFamily" Value="OpenSansRegular"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Page & Navigation Styles                       -->
+    <!-- ============================================== -->
+
+    <Style TargetType="Page" ApplyToDerivedTypes="True">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryBackground}" />
+    </Style>
+
+    <Style TargetType="Shell" ApplyToDerivedTypes="True">
+        <Setter Property="Shell.BackgroundColor" Value="{StaticResource PrimaryBackground}" />
+        <Setter Property="Shell.ForegroundColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="Shell.TitleColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="Shell.DisabledColor" Value="{StaticResource TextDisabled}" />
+        <Setter Property="Shell.UnselectedColor" Value="{StaticResource TextTertiary}" />
+        <Setter Property="Shell.NavBarHasShadow" Value="False" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource SecondaryBackground}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource AccentCyan}" />
+        <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource AccentCyan}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource TextTertiary}" />
+    </Style>
+
+    <Style TargetType="NavigationPage">
+        <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryBackground}" />
+        <Setter Property="BarTextColor" Value="{StaticResource TextPrimary}" />
+        <Setter Property="IconColor" Value="{StaticResource AccentCyan}" />
+    </Style>
+
+    <Style TargetType="TabbedPage">
+        <Setter Property="BarBackgroundColor" Value="{StaticResource SecondaryBackground}" />
+        <Setter Property="BarTextColor" Value="{StaticResource AccentCyan}" />
+        <Setter Property="UnselectedTabColor" Value="{StaticResource TextTertiary}" />
+        <Setter Property="SelectedTabColor" Value="{StaticResource AccentCyan}" />
+    </Style>
+
+    <!-- ============================================== -->
+    <!-- Custom Component Styles                        -->
+    <!-- ============================================== -->
+
+    <!-- Status Badge Style -->
+    <Style x:Key="StatusBadge" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource StatusSuccess}"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 8"/>
+        <Setter Property="Stroke" Value="Transparent"/>
+        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="HeightRequest" Value="24"/>
+    </Style>
+
+    <!-- Icon Container Style -->
+    <Style x:Key="IconContainer" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceBackground}"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 12"/>
+        <Setter Property="Stroke" Value="Transparent"/>
+        <Setter Property="WidthRequest" Value="48"/>
+        <Setter Property="HeightRequest" Value="48"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <!-- Floating Action Button Style -->
+    <Style x:Key="FloatingActionButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource AccentBlue}"/>
+        <Setter Property="TextColor" Value="{StaticResource White}"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="CornerRadius" Value="28"/>
+        <Setter Property="WidthRequest" Value="56"/>
+        <Setter Property="HeightRequest" Value="56"/>
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="{StaticResource AccentBlueBrush}" 
+                        Offset="0,4" 
+                        Radius="8" 
+                        Opacity="0.5"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Input Field Container -->
+    <Style x:Key="InputContainer" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceBackground}"/>
+        <Setter Property="StrokeShape" Value="RoundRectangle 15"/>
+        <Setter Property="Stroke" Value="{StaticResource Gray700}"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="Padding" Value="16,12"/>
+    </Style>
+
+</ResourceDictionary>

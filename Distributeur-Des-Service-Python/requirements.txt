@@ -1,0 +1,33 @@
+# Web & API
+fastapi==0.110.0
+uvicorn[standard]==0.27.1
+httpx[http2]>=0.26,<0.29
+requests==2.31.0
+python-multipart
+websockets>=13,<16
+
+# Database & Env
+supabase>=2.30.0,<3
+python-dotenv==1.0.1
+
+# AI & Audio (Version stable recommandée)
+openai-whisper
+azure-cognitiveservices-speech
+numpy==1.26.4
+
+# Traduction sans clé API (pipeline vocal → n8n)
+deep-translator>=1.11.4
+
+# Planification (déclencheur minuit)
+APScheduler>=3.10.4,<4
+
+# Validation & Tests
+pydantic>=2.6.3,<3
+pydantic-settings==2.2.1
+pytest==8.0.2
+requests-mock==1.11.0
+
+# Reconnaissance faciale (facultatif sous Windows : installer dlib-bin puis face_recognition)
+face_recognition
+cmake
+dlib-bin

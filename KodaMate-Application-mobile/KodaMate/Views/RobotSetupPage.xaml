@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:KodaMate.ViewModels"
+             x:Class="KodaMate.Views.RobotSetupPage"
+             x:DataType="viewmodels:RobotSetupViewModel"
+             Title="Configuration"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource PrimaryBackground}">
+
+    <Grid RowDefinitions="Auto,*" Padding="0,0,0,0">
+        <Border Grid.Row="0"
+                BackgroundColor="{StaticResource SecondaryBackground}"
+                StrokeThickness="0"
+                Padding="20,50,20,20">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,20,20"/>
+            </Border.StrokeShape>
+            <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                <Image Source="koda_logo.png"
+                       HeightRequest="40"
+                       WidthRequest="40"
+                       Aspect="AspectFit"/>
+                <Label Text="Configuration du robot"
+                       Style="{StaticResource Title2}"
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+        </Border>
+
+        <ScrollView Grid.Row="1" Padding="20,16,20,24">
+            <VerticalStackLayout Spacing="14" MaximumWidthRequest="480" HorizontalOptions="Center">
+
+                <Label Text="Renseignez les paramètres (table setting du backend)."
+                       Style="{StaticResource Caption1}"
+                       TextColor="{StaticResource TextSecondary}"/>
+
+                <Label Text="Nom du robot *" Style="{StaticResource Callout}"/>
+                <Border Style="{StaticResource InputContainer}">
+                    <Entry Text="{Binding RobotName}" Placeholder="Ex: Mohseny" BackgroundColor="Transparent"/>
+                </Border>
+
+                <Label Text="Sexe (personnage)" Style="{StaticResource Callout}"/>
+                <Border Style="{StaticResource InputContainer}">
+                    <Entry Text="{Binding Sexe}" Placeholder="Ex: neutre, masculin…" BackgroundColor="Transparent"/>
+                </Border>
+
+                <Label Text="Date" Style="{StaticResource Callout}"/>
+                <Border Style="{StaticResource InputContainer}">
+                    <Entry Text="{Binding DateStr}" Placeholder="yyyy-MM-dd" BackgroundColor="Transparent"/>
+                </Border>
+
+                <Label Text="Mot de passe (setting)" Style="{StaticResource Callout}"/>
+                <Border Style="{StaticResource InputContainer}">
+                    <Entry Text="{Binding MotDePasse}" IsPassword="True" BackgroundColor="Transparent"/>
+                </Border>
+
+                <Label Text="Caractère / personnalité" Style="{StaticResource Callout}"/>
+                <Border Style="{StaticResource InputContainer}">
+                    <Entry Text="{Binding Caractere}" Placeholder="Ex: bienveillant, drôle…" BackgroundColor="Transparent"/>
+                </Border>
+
+                <Label Text="Langue (locale BCP-47)" Style="{StaticResource Callout}"/>
+                <Border Style="{StaticResource InputContainer}">
+                    <Entry Text="{Binding Langue}" Placeholder="fr-FR, ar-SA…" BackgroundColor="Transparent"/>
+                </Border>
+
+                <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                    <Label Text="Robot allumé (etat)" VerticalOptions="Center" Style="{StaticResource Callout}"/>
+                    <Switch IsToggled="{Binding RobotPoweredOn}" OnColor="{StaticResource AccentCyan}"/>
+                </HorizontalStackLayout>
+
+                <Button Text="Enregistrer et continuer"
+                        Command="{Binding SaveCommand}"
+                        Margin="0,16,0,0"
+                        BackgroundColor="{StaticResource AccentCyan}"
+                        TextColor="{StaticResource PrimaryBackground}"
+                        FontFamily="OpenSansSemibold"
+                        CornerRadius="12"
+                        HeightRequest="48"/>
+
+                <Label Text="PUT /api/settings"
+                       Style="{StaticResource Caption2}"
+                       HorizontalOptions="Center"
+                       Opacity="0.5"
+                       Margin="0,8,0,0"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

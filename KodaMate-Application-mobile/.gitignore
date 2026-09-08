@@ -1,0 +1,50 @@
+# Visual Studio / Rider
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# MAUI / Android / iOS
+*.apk
+*.aab
+*.ipa
+*.dSYM.zip
+*.mdb
+*.cache
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / tools
+.idea/
+*.swp
+*~
+
+# Secrets (ne pas versionner)
+*.env
+appsettings.*.local.json

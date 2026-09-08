@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:KodaMate.ViewModels"
+             x:Class="KodaMate.Views.SettingsPage"
+             x:DataType="viewmodels:SettingsViewModel"
+             Title="Settings"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*" 
+          BackgroundColor="{StaticResource PrimaryBackground}">
+        
+        <!-- ============================================== -->
+        <!-- HEADER                                         -->
+        <!-- ============================================== -->
+        <Border Grid.Row="0"
+                BackgroundColor="{StaticResource SecondaryBackground}"
+                StrokeThickness="0"
+                Padding="20,50,20,20">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,20,20"/>
+            </Border.StrokeShape>
+
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Image Source="koda_logo.png"
+                       Grid.Column="0"
+                       HeightRequest="40"
+                       WidthRequest="40"
+                       Aspect="AspectFit"
+                       VerticalOptions="Center"/>
+                <Label Grid.Column="1"
+                       Text="Paramètres"
+                       Style="{StaticResource Title2}"
+                       VerticalOptions="Center"
+                       Margin="12,0,0,0"/>
+                <Border Grid.Column="2"
+                        BackgroundColor="{Binding WifiIndicatorColor}"
+                        StrokeShape="RoundRectangle 22"
+                        Stroke="Transparent"
+                        WidthRequest="44"
+                        HeightRequest="44"
+                        VerticalOptions="Center">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenWifiNetworksCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Image Source="wifi.png"
+                           HeightRequest="22"
+                           WidthRequest="22"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- ============================================== -->
+        <!-- SETTINGS CONTENT                               -->
+        <!-- ============================================== -->
+        <ScrollView Grid.Row="1" Padding="20,20,20,0">
+            <VerticalStackLayout Spacing="20">
+                
+                <!-- ============================================== -->
+                <!-- ROBOT SETTINGS                                 -->
+                <!-- ============================================== -->
+                <Label Text="Robot Settings"
+                       Style="{StaticResource Headline}"
+                       TextColor="{StaticResource AccentCyan}"/>
+                
+                <Border Style="{StaticResource CardBorder}">
+                    <VerticalStackLayout Spacing="16">
+                        
+                        <!-- Robot Name -->
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="8">
+                            <Label Text="Robot Name"
+                                   Style="{StaticResource Callout}"/>
+                            <Border Grid.Row="1"
+                                    Style="{StaticResource InputContainer}">
+                                <Entry Text="{Binding RobotName}"
+                                       Placeholder="Enter robot name"
+                                       BackgroundColor="Transparent"/>
+                            </Border>
+                        </Grid>
+                        
+                        <!-- Divider -->
+                        <BoxView BackgroundColor="{StaticResource Gray700}"
+                                 HeightRequest="1"/>
+                        
+                        <!-- Voice Selection -->
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="8">
+                            <Label Text="Voice Type"
+                                   Style="{StaticResource Callout}"/>
+                            <Border Grid.Row="1"
+                                    Style="{StaticResource InputContainer}">
+                                <Picker ItemsSource="{Binding VoiceOptions}"
+                                        SelectedItem="{Binding SelectedVoice}"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{StaticResource TextPrimary}"
+                                        Title="Select voice"/>
+                            </Border>
+                        </Grid>
+
+                        <BoxView BackgroundColor="{StaticResource Gray700}" HeightRequest="1"/>
+
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="8">
+                            <Label Text="Sexe (personnage)" Style="{StaticResource Callout}"/>
+                            <Border Grid.Row="1" Style="{StaticResource InputContainer}">
+                                <Entry Text="{Binding Sexe}" Placeholder="neutre…" BackgroundColor="Transparent"/>
+                            </Border>
+                        </Grid>
+
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="8">
+                            <Label Text="Caractère" Style="{StaticResource Callout}"/>
+                            <Border Grid.Row="1" Style="{StaticResource InputContainer}">
+                                <Entry Text="{Binding Caractere}" Placeholder="Personnalité" BackgroundColor="Transparent"/>
+                            </Border>
+                        </Grid>
+
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="8">
+                            <Label Text="Langue (BCP-47)" Style="{StaticResource Callout}"/>
+                            <Border Grid.Row="1" Style="{StaticResource InputContainer}">
+                                <Entry Text="{Binding Langue}" Placeholder="fr-FR" BackgroundColor="Transparent"/>
+                            </Border>
+                        </Grid>
+
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="8">
+                            <Label Text="Date (setting)" Style="{StaticResource Callout}"/>
+                            <Border Grid.Row="1" Style="{StaticResource InputContainer}">
+                                <Entry Text="{Binding DateSetting}" Placeholder="yyyy-MM-dd" BackgroundColor="Transparent"/>
+                            </Border>
+                        </Grid>
+
+                        <Grid RowDefinitions="Auto,Auto" RowSpacing="8">
+                            <Label Text="Mot de passe (setting)" Style="{StaticResource Callout}"/>
+                            <Border Grid.Row="1" Style="{StaticResource InputContainer}">
+                                <Entry Text="{Binding MotDePasseSetting}" IsPassword="True" BackgroundColor="Transparent"/>
+                            </Border>
+                        </Grid>
+
+                        <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                            <Label Text="Robot allumé (etat)" Style="{StaticResource Callout}" VerticalOptions="Center"/>
+                            <Switch IsToggled="{Binding RobotEtat}" OnColor="{StaticResource AccentCyan}"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ============================================== -->
+                <!-- CONNECTIVITY                                   -->
+                <!-- ============================================== -->
+                <Label Text="Connectivity"
+                       Style="{StaticResource Headline}"
+                       TextColor="{StaticResource AccentCyan}"/>
+                
+                <Border Style="{StaticResource CardBorder}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16">
+                        <Border BackgroundColor="{StaticResource SurfaceBackground}"
+                                StrokeShape="RoundRectangle 12"
+                                Stroke="Transparent"
+                                WidthRequest="48"
+                                HeightRequest="48">
+                            <Image Source="wifi.png"
+                                   HeightRequest="26"
+                                   WidthRequest="26"
+                                   Aspect="AspectFit"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                        
+                        <VerticalStackLayout Grid.Column="1" 
+                                             VerticalOptions="Center"
+                                             Spacing="4">
+                            <Label Text="Wi-Fi Configuration"
+                                   Style="{StaticResource Headline}"/>
+                            <Label Text="{Binding WifiNetwork}"
+                                   Style="{StaticResource Caption1}"/>
+                        </VerticalStackLayout>
+                        
+                        <Border Grid.Column="2"
+                                BackgroundColor="{Binding WifiIndicatorColor}"
+                                StrokeShape="RoundRectangle 10"
+                                Stroke="Transparent"
+                                Padding="12,8"
+                                VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ConfigureWifiCommand}"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="Réseaux"
+                                   TextColor="White"
+                                   FontSize="13"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- ============================================== -->
+                <!-- PREFERENCES                                    -->
+                <!-- ============================================== -->
+                <Label Text="Preferences"
+                       Style="{StaticResource Headline}"
+                       TextColor="{StaticResource AccentCyan}"/>
+                
+                <Border Style="{StaticResource CardBorder}">
+                    <VerticalStackLayout Spacing="16">
+                        
+                        <!-- Notifications Toggle -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16">
+                            <Label Text="🔔"
+                                   FontSize="24"
+                                   VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" 
+                                                 VerticalOptions="Center"
+                                                 Spacing="2">
+                                <Label Text="Notifications"
+                                       Style="{StaticResource Headline}"/>
+                                <Label Text="Receive alerts and reminders"
+                                       Style="{StaticResource Caption1}"/>
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2"
+                                    IsToggled="{Binding NotificationsEnabled}"
+                                    OnColor="{StaticResource AccentCyan}"
+                                    VerticalOptions="Center"/>
+                        </Grid>
+                        
+                        <!-- Divider -->
+                        <BoxView BackgroundColor="{StaticResource Gray700}"
+                                 HeightRequest="1"/>
+                        
+                        <!-- Health Monitoring Toggle -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16">
+                            <Label Text="❤️"
+                                   FontSize="24"
+                                   VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" 
+                                                 VerticalOptions="Center"
+                                                 Spacing="2">
+                                <Label Text="Health Monitoring"
+                                       Style="{StaticResource Headline}"/>
+                                <Label Text="Track vital signs and activity"
+                                       Style="{StaticResource Caption1}"/>
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2"
+                                    IsToggled="{Binding HealthMonitoringEnabled}"
+                                    OnColor="{StaticResource AccentCyan}"
+                                    VerticalOptions="Center"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ============================================== -->
+                <!-- ACTIONS                                        -->
+                <!-- ============================================== -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <!-- Save Button -->
+                    <Button Text="Save Changes"
+                            Command="{Binding SaveSettingsCommand}">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="{StaticResource GradientStart}" Offset="0.0"/>
+                                <GradientStop Color="{StaticResource GradientEnd}" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    
+                    <!-- Reset Button -->
+                    <Button Grid.Column="1"
+                            Text="Reset"
+                            Style="{StaticResource SecondaryButton}"
+                            Command="{Binding ResetSettingsCommand}"/>
+                </Grid>
+
+                <!-- ============================================== -->
+                <!-- ABOUT SECTION                                  -->
+                <!-- ============================================== -->
+                <Label Text="About"
+                       Style="{StaticResource Headline}"
+                       TextColor="{StaticResource AccentCyan}"
+                       Margin="0,10,0,0"/>
+                
+                <Border Style="{StaticResource CardBorder}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShowAboutCommand}"/>
+                    </Border.GestureRecognizers>
+                    
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="16">
+                        <!-- App Icon -->
+                        <Border BackgroundColor="{StaticResource SurfaceBackground}"
+                                StrokeShape="RoundRectangle 15"
+                                Stroke="Transparent"
+                                WidthRequest="60"
+                                HeightRequest="60">
+                            <Label Text="🤖"
+                                   FontSize="32"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                        
+                        <VerticalStackLayout Grid.Column="1" 
+                                             VerticalOptions="Center"
+                                             Spacing="4">
+                            <Label Text="Koda Mate"
+                                   Style="{StaticResource Headline}"/>
+                            <Label Text="{Binding AppVersion, StringFormat='Version {0}'}"
+                                   Style="{StaticResource Caption1}"/>
+                            <Label Text="Your smart home companion"
+                                   Style="{StaticResource Caption2}"/>
+                        </VerticalStackLayout>
+                        
+                        <Label Grid.Column="2"
+                               Text="›"
+                               FontSize="24"
+                               TextColor="{StaticResource TextTertiary}"
+                               VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <Button Text="Déconnexion"
+                        Command="{Binding LogoutCommand}"
+                        Style="{StaticResource SecondaryButton}"
+                        Margin="0,8,0,0"/>
+
+                <!-- Copyright -->
+                <Label Text="© 2026 Koda Robotics. All rights reserved."
+                       Style="{StaticResource Caption2}"
+                       HorizontalOptions="Center"
+                       Margin="0,10,0,30"/>
+                
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           Color="{StaticResource AccentCyan}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+    </Grid>
+</ContentPage>

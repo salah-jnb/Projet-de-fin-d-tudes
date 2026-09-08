@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:KodaMate.ViewModels"
+             xmlns:models="clr-namespace:KodaMate.Models"
+             x:Class="KodaMate.Views.HistoryPage"
+             x:DataType="viewmodels:HistoryViewModel"
+             Title="Historique"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,Auto,Auto,*"
+          BackgroundColor="{StaticResource PrimaryBackground}">
+
+        <!-- En-tête avec logo -->
+        <Border Grid.Row="0"
+                BackgroundColor="{StaticResource SecondaryBackground}"
+                StrokeThickness="0"
+                Padding="20,50,20,16">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,20,20"/>
+            </Border.StrokeShape>
+            <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                <Image Source="koda_logo.png"
+                       HeightRequest="44"
+                       WidthRequest="44"
+                       Aspect="AspectFit"/>
+                <Label Text="Historique"
+                       Style="{StaticResource Title2}"
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+        </Border>
+
+        <!-- Filtre par date -->
+        <VerticalStackLayout Grid.Row="1" Spacing="8" Padding="20,12,20,0">
+            <Label Text="Filtrer par date" Style="{StaticResource Callout}"/>
+            <Border BackgroundColor="{StaticResource SurfaceBackground}"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="{StaticResource Gray700}"
+                    Padding="4,0">
+                <Picker Title="Période"
+                        ItemsSource="{Binding FilterOptions}"
+                        SelectedItem="{Binding SelectedFilter}"
+                        TextColor="{StaticResource TextPrimary}"/>
+            </Border>
+            <DatePicker Date="{Binding CustomFilterDate}"
+                        IsVisible="{Binding ShowCustomDatePicker}"
+                        TextColor="{StaticResource TextPrimary}"
+                        BackgroundColor="{StaticResource SurfaceBackground}"/>
+        </VerticalStackLayout>
+
+        <!-- Recherche -->
+        <Border Grid.Row="2"
+                Margin="20,8,20,8"
+                BackgroundColor="{StaticResource SurfaceBackground}"
+                StrokeShape="RoundRectangle 15"
+                Stroke="{StaticResource Gray700}"
+                Padding="8,0">
+            <SearchBar Placeholder="Rechercher dans les conversations…"
+                       Text="{Binding SearchQuery}"
+                       BackgroundColor="Transparent"/>
+        </Border>
+
+        <RefreshView Grid.Row="3"
+                     Command="{Binding RefreshCommand}"
+                     IsRefreshing="{Binding IsBusy}">
+            <CollectionView ItemsSource="{Binding Entries}"
+                            Margin="12,0,12,12">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center"
+                                         HorizontalOptions="Center"
+                                         Spacing="16"
+                                         Padding="40">
+                        <Image Source="koda_logo.png"
+                               HeightRequest="80"
+                               WidthRequest="80"
+                               Aspect="AspectFit"
+                               HorizontalOptions="Center"
+                               Opacity="0.85"/>
+                        <Label Text="Aucune conversation"
+                               Style="{StaticResource Headline}"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Les échanges avec Koda apparaîtront ici."
+                               Style="{StaticResource Callout}"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ConversationHistoryEntry">
+                        <VerticalStackLayout Margin="0,4">
+                            <!-- Séparateur de date -->
+                            <Label Text="{Binding DisplayDate}"
+                                   IsVisible="{Binding IsDateHeader}"
+                                   Style="{StaticResource Caption1}"
+                                   TextColor="{StaticResource TextTertiary}"
+                                   HorizontalOptions="Center"
+                                   Margin="0,12,0,8"/>
+
+                            <!-- Fil Messenger : question à droite, réponse à gauche -->
+                            <VerticalStackLayout IsVisible="{Binding IsDateHeader, Converter={StaticResource InvertedBoolConverter}}"
+                                                 Spacing="8"
+                                                 Margin="0,0,0,16">
+                                <Label Text="{Binding MessageDateLabel}"
+                                       Style="{StaticResource Caption2}"
+                                       HorizontalOptions="Center"
+                                       TextColor="{StaticResource TextTertiary}"
+                                       IsVisible="{Binding MessageDateLabel, Converter={StaticResource StringToBoolConverter}}"/>
+
+                                <!-- Question (utilisateur) — droite -->
+                                <HorizontalStackLayout HorizontalOptions="End" Spacing="0">
+                                    <Border BackgroundColor="{StaticResource AccentCyan}"
+                                            StrokeShape="RoundRectangle 18,18,4,18"
+                                            Stroke="Transparent"
+                                            Padding="14,10"
+                                            MaximumWidthRequest="300">
+                                        <Label Text="{Binding Question}"
+                                               TextColor="{StaticResource PrimaryBackground}"
+                                               FontSize="14"
+                                               LineBreakMode="WordWrap"/>
+                                    </Border>
+                                </HorizontalStackLayout>
+
+                                <!-- Réponse (Koda) — gauche -->
+                                <HorizontalStackLayout HorizontalOptions="Start" Spacing="8">
+                                    <Image Source="koda_logo.png"
+                                           HeightRequest="32"
+                                           WidthRequest="32"
+                                           Aspect="AspectFit"
+                                           VerticalOptions="End"/>
+                                    <Border BackgroundColor="{StaticResource SurfaceBackground}"
+                                            StrokeShape="RoundRectangle 4,18,18,18"
+                                            Stroke="{StaticResource Gray700}"
+                                            Padding="14,10"
+                                            MaximumWidthRequest="300">
+                                        <Label Text="{Binding Reponce}"
+                                               TextColor="{StaticResource TextPrimary}"
+                                               FontSize="14"
+                                               LineBreakMode="WordWrap"/>
+                                    </Border>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

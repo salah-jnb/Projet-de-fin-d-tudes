@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="KodaMate.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:KodaMate.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Title="Koda Mate">
+
+    <!-- ============================================== -->
+    <!-- KODA MATE - Shell Navigation Structure         -->
+    <!-- TabBar with 5 main sections                    -->
+    <!-- ============================================== -->
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <!-- Custom TabBar styling -->
+            <Style TargetType="TabBar">
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource SecondaryBackground}"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource AccentCyan}"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource TextTertiary}"/>
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <TabBar>
+        <!-- Home / Remote Control -->
+        <Tab Title="Home"
+             Icon="{OnPlatform Default='home_icon.png'}">
+            <ShellContent 
+                Route="home"
+                ContentTemplate="{DataTemplate views:HomePage}"/>
+        </Tab>
+
+        <!-- Chat AI -->
+        <Tab Title="Chat"
+             Icon="{OnPlatform Default='chat_icon.png'}">
+            <ShellContent 
+                Route="chat"
+                ContentTemplate="{DataTemplate views:ChatPage}"/>
+        </Tab>
+
+        <!-- Historique -->
+        <Tab Title="Historique"
+             Icon="{OnPlatform Default='koda_logo.png'}">
+            <ShellContent
+                Route="history"
+                ContentTemplate="{DataTemplate views:HistoryPage}"/>
+        </Tab>
+
+        <!-- Settings -->
+        <Tab Title="Settings"
+             Icon="{OnPlatform Default='settings_icon.png'}">
+            <ShellContent 
+                Route="settings"
+                ContentTemplate="{DataTemplate views:SettingsPage}"/>
+        </Tab>
+    </TabBar>
+
+    <!-- ============================================== -->
+    <!-- Additional Routes (not in TabBar)              -->
+    <!-- ============================================== -->
+    
+    <!-- Notifications Page -->
+    <ShellContent 
+        Route="notifications"
+        ContentTemplate="{DataTemplate views:NotificationsPage}"
+        Shell.TabBarIsVisible="False"/>
+
+</Shell>

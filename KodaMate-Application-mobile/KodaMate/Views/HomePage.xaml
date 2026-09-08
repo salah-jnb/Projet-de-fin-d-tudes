@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:KodaMate.ViewModels"
+             x:Class="KodaMate.Views.HomePage"
+             x:DataType="viewmodels:HomeViewModel"
+             Title="Home"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto" 
+          BackgroundColor="{StaticResource PrimaryBackground}">
+        
+        <!-- ============================================== -->
+        <!-- HEADER with Gradient                           -->
+        <!-- ============================================== -->
+        <Border Grid.Row="0"
+                StrokeThickness="0"
+                Padding="20,50,20,20">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="{StaticResource GradientStart}" Offset="0.0"/>
+                    <GradientStop Color="{StaticResource GradientEnd}" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,30,30"/>
+            </Border.StrokeShape>
+            
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" ColumnSpacing="8">
+                <Image Grid.Column="0"
+                       Source="koda_logo.png"
+                       HeightRequest="40"
+                       WidthRequest="40"
+                       Aspect="AspectFit"
+                       VerticalOptions="Center"/>
+                <VerticalStackLayout Grid.Column="1">
+                    <Label Text="{Binding CityName, StringFormat='📍 {0}'}"
+                           TextColor="{StaticResource White}"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="12"
+                           Opacity="0.85"/>
+                    <Label Text="{Binding RobotName, StringFormat='Meet {0}'}"
+                           TextColor="{StaticResource White}"
+                           FontFamily="OpenSansSemibold"
+                           FontSize="26"/>
+                    <HorizontalStackLayout Spacing="6" Margin="0,2,0,0">
+                        <Label Text="{Binding WeatherEmoji}" FontSize="14"/>
+                        <Label Text="{Binding WeatherDescription}"
+                               TextColor="#CCFFFFFF"
+                               FontSize="12"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- BLE link to the Pi (red = scanning/failed, green = connected) -->
+                <Border Grid.Column="2"
+                        BackgroundColor="{Binding BleIndicatorColor}"
+                        StrokeShape="RoundRectangle 22"
+                        Stroke="Transparent"
+                        WidthRequest="44"
+                        HeightRequest="44"
+                        VerticalOptions="Center"
+                        ToolTipProperties.Text="{Binding BleTooltip}">
+                    <Label Text="🛰️"
+                           FontSize="20"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Border>
+
+                <!-- Wi‑Fi (rouge = non enregistré, vert = simulation enregistrée) -->
+                <Border Grid.Column="3"
+                        BackgroundColor="{Binding WifiIndicatorColor}"
+                        StrokeShape="RoundRectangle 22"
+                        Stroke="Transparent"
+                        WidthRequest="44"
+                        HeightRequest="44"
+                        VerticalOptions="Center">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenWifiNetworksCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Image Source="wifi.png"
+                           HeightRequest="22"
+                           WidthRequest="22"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Border>
+
+                <!-- Settings Button -->
+                <Border Grid.Column="4"
+                        BackgroundColor="#20FFFFFF"
+                        StrokeShape="RoundRectangle 12"
+                        Stroke="Transparent"
+                        WidthRequest="44"
+                        HeightRequest="44"
+                        VerticalOptions="Center">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenSettingsCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="⚙️"
+                           FontSize="20"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- ============================================== -->
+        <!-- MAIN CONTENT                                   -->
+        <!-- ============================================== -->
+        <ScrollView Grid.Row="1" Padding="20,20,20,0">
+            <VerticalStackLayout Spacing="20">
+                
+                <!-- Status Cards Row -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+
+                    <!-- Connection Status Card -->
+                    <Border Style="{StaticResource CardBorder}">
+                        <VerticalStackLayout Spacing="8">
+                            <HorizontalStackLayout Spacing="8">
+                                <Image Source="wifi.png"
+                                       HeightRequest="22"
+                                       WidthRequest="22"
+                                       VerticalOptions="Center"
+                                       Aspect="AspectFit"/>
+                                <Label Text="{Binding ConnectionStatus}"
+                                       Style="{StaticResource Callout}"/>
+                            </HorizontalStackLayout>
+                            <Label Text="État réseau"
+                                   Style="{StaticResource Caption1}"/>
+                            <Border BackgroundColor="{Binding IsConnected, Converter={StaticResource BoolToColorConverter}}"
+                                    HeightRequest="4"
+                                    StrokeShape="RoundRectangle 2"
+                                    Stroke="Transparent"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Wind Speed Card (from Open-Meteo) -->
+                    <Border Grid.Column="1" Style="{StaticResource CardBorder}">
+                        <VerticalStackLayout Spacing="8">
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="💨" FontSize="20"/>
+                                <Label Text="{Binding WindSpeed, StringFormat='{0} km/h'}"
+                                       Style="{StaticResource Callout}"/>
+                            </HorizontalStackLayout>
+                            <Label Text="Vent"
+                                   Style="{StaticResource Caption1}"/>
+                            <Border BackgroundColor="{StaticResource AccentCyan}"
+                                    HeightRequest="4"
+                                    StrokeShape="RoundRectangle 2"
+                                    Stroke="Transparent"
+                                    Opacity="0.5"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- ============================================== -->
+                <!-- POWER BUTTON - Central Control                 -->
+                <!-- ============================================== -->
+                <Grid HeightRequest="280" Margin="0,10">
+                    
+                    <!-- Outer Glow Effect -->
+                    <Ellipse Fill="{StaticResource GlowGradientBrush}"
+                             WidthRequest="280"
+                             HeightRequest="280"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center"
+                             IsVisible="{Binding IsRobotPoweredOn}"/>
+                    
+                    <!-- Power Button Outer Ring -->
+                    <Border WidthRequest="200"
+                            HeightRequest="200"
+                            StrokeShape="RoundRectangle 100"
+                            StrokeThickness="3"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            Padding="0">
+                        <Border.Stroke>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="{StaticResource GradientStart}" Offset="0.0"/>
+                                <GradientStop Color="{StaticResource GradientEnd}" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Border.Stroke>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource SecondaryBackground}"/>
+                        </Border.Background>
+                        
+                        <!-- Inner Power Button -->
+                        <Border WidthRequest="160"
+                                HeightRequest="160"
+                                StrokeShape="RoundRectangle 80"
+                                Stroke="Transparent"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="{Binding IsRobotPoweredOn, Converter={StaticResource BoolToGradientStartConverter}}" Offset="0.0"/>
+                                    <GradientStop Color="{Binding IsRobotPoweredOn, Converter={StaticResource BoolToGradientEndConverter}}" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Shadow>
+                                <Shadow Brush="{StaticResource AccentCyanBrush}"
+                                        Offset="0,0"
+                                        Radius="20"
+                                        Opacity="{Binding IsRobotPoweredOn, Converter={StaticResource BoolToOpacityConverter}}"/>
+                            </Border.Shadow>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TogglePowerCommand}"/>
+                            </Border.GestureRecognizers>
+                            
+                            <VerticalStackLayout HorizontalOptions="Center" 
+                                                 VerticalOptions="Center"
+                                                 Spacing="4">
+                                <!-- Power Icon -->
+                                <Label Text="⏻"
+                                       TextColor="{StaticResource White}"
+                                       FontSize="48"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="{Binding IsRobotPoweredOn, Converter={StaticResource BoolToPowerTextConverter}}"
+                                       TextColor="{StaticResource White}"
+                                       FontSize="12"
+                                       FontFamily="OpenSansSemibold"
+                                       HorizontalOptions="Center"
+                                       Opacity="0.9"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Border>
+                </Grid>
+
+                <!-- Robot Status Text -->
+                <Label Text="{Binding IsRobotPoweredOn, Converter={StaticResource BoolToStatusTextConverter}}"
+                       HorizontalOptions="Center"
+                       Style="{StaticResource Headline}"
+                       TextColor="{StaticResource AccentCyan}"/>
+
+                <!-- ============================================== -->
+                <!-- ENVIRONMENT CARDS                              -->
+                <!-- ============================================== -->
+                <Label Text="Home Environment"
+                       Style="{StaticResource Title3}"
+                       Margin="0,10,0,0"/>
+                
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                    
+                    <!-- Temperature Card -->
+                    <Border Style="{StaticResource ElevatedCard}">
+                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+                            <Border BackgroundColor="#20FF9800"
+                                    StrokeShape="RoundRectangle 12"
+                                    Stroke="Transparent"
+                                    WidthRequest="48"
+                                    HeightRequest="48"
+                                    HorizontalOptions="Start">
+                                <Label Text="🌡️"
+                                       FontSize="24"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                            <Label Grid.Row="1"
+                                   Text="{Binding Temperature, StringFormat='{0:F1}°C'}"
+                                   FontSize="28"
+                                   FontFamily="OpenSansSemibold"
+                                   TextColor="{StaticResource TextPrimary}"/>
+                            <Label Grid.Row="2"
+                                   Text="Temperature"
+                                   Style="{StaticResource Caption1}"/>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Humidity Card -->
+                    <Border Grid.Column="1" Style="{StaticResource ElevatedCard}">
+                        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+                            <Border BackgroundColor="#2000B4D8"
+                                    StrokeShape="RoundRectangle 12"
+                                    Stroke="Transparent"
+                                    WidthRequest="48"
+                                    HeightRequest="48"
+                                    HorizontalOptions="Start">
+                                <Label Text="💧"
+                                       FontSize="24"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                            <Label Grid.Row="1"
+                                   Text="{Binding Humidity, StringFormat='{0}%'}"
+                                   FontSize="28"
+                                   FontFamily="OpenSansSemibold"
+                                   TextColor="{StaticResource TextPrimary}"/>
+                            <Label Grid.Row="2"
+                                   Text="Humidity"
+                                   Style="{StaticResource Caption1}"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- Last Sync Info -->
+                <HorizontalStackLayout HorizontalOptions="Center" 
+                                       Spacing="8"
+                                       Margin="0,10,0,20">
+                    <Label Text="Last updated:"
+                           Style="{StaticResource Caption2}"/>
+                    <Label Text="{Binding LastSyncTime}"
+                           Style="{StaticResource Caption2}"
+                           TextColor="{StaticResource AccentCyan}"/>
+                    <Border BackgroundColor="Transparent"
+                            Padding="4">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RefreshCommand}"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="🔄"
+                               FontSize="14"/>
+                    </Border>
+                </HorizontalStackLayout>
+                
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           Color="{StaticResource AccentCyan}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+    </Grid>
+</ContentPage>

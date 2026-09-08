@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:KodaMate.ViewModels"
+             x:Class="KodaMate.Views.LoginPage"
+             x:DataType="viewmodels:LoginViewModel"
+             Title="Connexion"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource PrimaryBackground}">
+
+    <Grid RowDefinitions="*,Auto,*"
+          Padding="24,48,24,32"
+          RowSpacing="0">
+
+        <VerticalStackLayout Grid.Row="1"
+                             Spacing="18"
+                             MaximumWidthRequest="420"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+
+            <!-- Logo KODA uniquement (remplace l'image .NET par défaut) -->
+            <Image Source="koda_logo.png"
+                   HeightRequest="200"
+                   WidthRequest="200"
+                   Aspect="AspectFit"
+                   HorizontalOptions="Center"
+                   SemanticProperties.Description="Logo KODA"/>
+
+            <Border Style="{StaticResource CardBorder}" Margin="0,8,0,0">
+                <VerticalStackLayout Spacing="14" Padding="12,14">
+                    <Label Text="Email client" Style="{StaticResource Callout}"/>
+                    <Border Style="{StaticResource InputContainer}">
+                        <Entry Text="{Binding Email}"
+                               Keyboard="Email"
+                               ReturnType="Next"
+                               Placeholder="email@exemple.com"
+                               BackgroundColor="Transparent"/>
+                    </Border>
+
+                    <Label Text="Mot de passe" Style="{StaticResource Callout}"/>
+                    <Border Style="{StaticResource InputContainer}">
+                        <Entry Text="{Binding Password}"
+                               IsPassword="True"
+                               ReturnType="Next"
+                               Placeholder="••••••••"
+                               BackgroundColor="Transparent"/>
+                    </Border>
+
+                    <Label Text="Serveur (IP du PC)" Style="{StaticResource Callout}"/>
+                    <Border Style="{StaticResource InputContainer}">
+                        <Entry Text="{Binding ServerUrl}"
+                               Keyboard="Url"
+                               Placeholder="http://192.168.1.8:8000/api"
+                               BackgroundColor="Transparent"/>
+                    </Border>
+
+                    <Button Text="Tester le serveur"
+                            Command="{Binding TestServerCommand}"
+                            BackgroundColor="{StaticResource SurfaceBackground}"
+                            TextColor="{StaticResource AccentCyan}"
+                            FontFamily="OpenSansSemibold"
+                            CornerRadius="10"
+                            HeightRequest="44"/>
+
+                    <Label Text="{Binding StatusMessage}"
+                           Style="{StaticResource Caption2}"
+                           TextColor="{StaticResource TextSecondary}"
+                           HorizontalTextAlignment="Center"/>
+
+                    <Label Text="{Binding ErrorMessage}"
+                           TextColor="{StaticResource AccentRed}"
+                           IsVisible="{Binding ErrorMessage, Converter={StaticResource StringToBoolConverter}}"
+                           Style="{StaticResource Caption1}"
+                           HorizontalTextAlignment="Center"/>
+
+                    <Button Text="Se connecter"
+                            Command="{Binding LoginCommand}"
+                            Margin="0,8,0,0"
+                            BackgroundColor="{StaticResource AccentCyan}"
+                            TextColor="{StaticResource PrimaryBackground}"
+                            FontFamily="OpenSansSemibold"
+                            CornerRadius="12"
+                            HeightRequest="50"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Effacer la session enregistrée"
+                    Command="{Binding ResetSessionCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource TextSecondary}"
+                    FontSize="12"
+                    Margin="0,4,0,0"/>
+        </VerticalStackLayout>
+
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           Color="{StaticResource AccentCyan}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           ZIndex="1"/>
+    </Grid>
+</ContentPage>

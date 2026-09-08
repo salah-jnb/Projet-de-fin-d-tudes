@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:KodaMate.ViewModels"
+             x:Class="KodaMate.Views.WifiNetworksPage"
+             x:Name="PageRoot"
+             x:DataType="viewmodels:WifiNetworksViewModel"
+             Title="Réseaux Wi‑Fi"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource PrimaryBackground}">
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="0,0,0,0">
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,Auto"
+              Padding="16,48,16,12"
+              BackgroundColor="{StaticResource SecondaryBackground}">
+            <Label Text="Réseaux Wi‑Fi"
+                   Style="{StaticResource Title2}"
+                   VerticalOptions="Center"/>
+            <Button Grid.Column="1"
+                    Text="Fermer"
+                    Command="{Binding CloseCommand}"
+                    Style="{StaticResource GhostButton}"/>
+        </Grid>
+
+        <Button Grid.Row="1"
+                Text="Actualiser la liste"
+                Command="{Binding RefreshCommand}"
+                Margin="16,8,16,8"
+                Style="{StaticResource SecondaryButton}"/>
+
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Networks}"
+                        SelectionMode="None"
+                        Margin="8,0,8,16">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,4"
+                            Padding="14,12"
+                            StrokeShape="RoundRectangle 12"
+                            Stroke="Transparent"
+                            BackgroundColor="{StaticResource SurfaceBackground}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.PickNetworkCommand}"
+                                CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="{Binding .}"
+                               Style="{StaticResource Callout}"/>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

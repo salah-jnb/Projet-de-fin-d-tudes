@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:KodaMate.ViewModels"
+             xmlns:models="clr-namespace:KodaMate.Models"
+             x:Class="KodaMate.Views.NotificationsPage"
+             x:DataType="viewmodels:NotificationsViewModel"
+             Title="Notifications"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*" 
+          BackgroundColor="{StaticResource PrimaryBackground}">
+        
+        <!-- ============================================== -->
+        <!-- HEADER                                         -->
+        <!-- ============================================== -->
+        <Border Grid.Row="0"
+                BackgroundColor="{StaticResource SecondaryBackground}"
+                StrokeThickness="0"
+                Padding="20,50,20,20">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="0,0,20,20"/>
+            </Border.StrokeShape>
+            
+            <Grid ColumnDefinitions="*,Auto">
+                <VerticalStackLayout>
+                    <Label Text="Notifications"
+                           Style="{StaticResource Title2}"/>
+                    <Label Text="{Binding UnreadCount, StringFormat='{0} unread'}"
+                           Style="{StaticResource Caption1}"
+                           TextColor="{StaticResource AccentCyan}"/>
+                </VerticalStackLayout>
+                
+                <!-- Mark All Read Button -->
+                <Border Grid.Column="1"
+                        BackgroundColor="{StaticResource SurfaceBackground}"
+                        StrokeShape="RoundRectangle 12"
+                        Stroke="Transparent"
+                        Padding="12,8"
+                        VerticalOptions="Center"
+                        IsVisible="{Binding UnreadCount, Converter={StaticResource IntToBoolConverter}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding MarkAllReadCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="Mark all read"
+                           Style="{StaticResource Caption1}"
+                           TextColor="{StaticResource AccentCyan}"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- ============================================== -->
+        <!-- NOTIFICATIONS LIST                             -->
+        <!-- ============================================== -->
+        <RefreshView Grid.Row="1"
+                     IsRefreshing="{Binding IsBusy}"
+                     Command="{Binding RefreshCommand}">
+            <CollectionView ItemsSource="{Binding Notifications}"
+                            Margin="20,15,20,0">
+                
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center"
+                                         HorizontalOptions="Center"
+                                         Spacing="16"
+                                         Padding="40">
+                        <Label Text="🔔"
+                               FontSize="64"
+                               HorizontalOptions="Center"/>
+                        <Label Text="All caught up!"
+                               Style="{StaticResource Headline}"
+                               HorizontalOptions="Center"/>
+                        <Label Text="No new notifications. Koda will alert you when something important happens."
+                               Style="{StaticResource Callout}"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Notification">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Dismiss"
+                                               BackgroundColor="{StaticResource AccentRed}"
+                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:NotificationsViewModel}}, Path=DismissCommand}"
+                                               CommandParameter="{Binding .}"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            
+                            <Border Margin="0,6"
+                                    Padding="16"
+                                    BackgroundColor="{StaticResource CardBackground}"
+                                    StrokeShape="RoundRectangle 15"
+                                    StrokeThickness="0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:NotificationsViewModel}}, Path=MarkAsReadCommand}"
+                                                          CommandParameter="{Binding .}"/>
+                                </Border.GestureRecognizers>
+                                
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <!-- Accent Line & Icon -->
+                                    <Grid RowDefinitions="*" WidthRequest="48">
+                                        <!-- Vertical Accent Line -->
+                                        <BoxView WidthRequest="3"
+                                                 HorizontalOptions="Start"
+                                                 VerticalOptions="Fill"
+                                                 BackgroundColor="{Binding AccentColor}"
+                                                 Margin="-16,0,0,0"/>
+                                        
+                                        <!-- Icon Container -->
+                                        <Border BackgroundColor="{StaticResource SurfaceBackground}"
+                                                StrokeShape="RoundRectangle 12"
+                                                Stroke="Transparent"
+                                                WidthRequest="44"
+                                                HeightRequest="44"
+                                                HorizontalOptions="End">
+                                            <Label Text="{Binding Icon}"
+                                                   FontSize="20"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center"/>
+                                        </Border>
+                                    </Grid>
+                                    
+                                    <!-- Content -->
+                                    <VerticalStackLayout Grid.Column="1" 
+                                                         VerticalOptions="Center"
+                                                         Spacing="4">
+                                        <Label Text="{Binding Title}"
+                                               Style="{StaticResource Headline}"
+                                               FontFamily="{Binding IsRead, Converter={StaticResource BoolToFontFamilyConverter}}"/>
+                                        <Label Text="{Binding Message}"
+                                               Style="{StaticResource Callout}"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="2"/>
+                                        <Label Text="{Binding Timestamp, StringFormat='{0:g}'}"
+                                               Style="{StaticResource Caption2}"/>
+                                    </VerticalStackLayout>
+                                    
+                                    <!-- Unread Indicator -->
+                                    <Ellipse Grid.Column="2"
+                                             Fill="{StaticResource AccentCyan}"
+                                             WidthRequest="10"
+                                             HeightRequest="10"
+                                             VerticalOptions="Start"
+                                             IsVisible="{Binding IsRead, Converter={StaticResource InvertedBoolConverter}}"/>
+                                </Grid>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

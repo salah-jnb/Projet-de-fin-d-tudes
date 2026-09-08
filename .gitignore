@@ -1,0 +1,47 @@
+# Python
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+.env
+.venv
+
+# IDE
+.vscode/
+**/.idea/
+*.swp
+*.swo
+*~
+**/.vs/
+
+# .NET
+**/bin/
+**/obj/
+*.csproj.user
+*.user
+*.userprefs
+
+# Project caches and generated assets
+**/cache/
+**/.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node/npm
+node_modules/
+npm-debug.log
+
+# Other
+*.log
+.pytest_cache/
+.coverage
+*.sqlite
